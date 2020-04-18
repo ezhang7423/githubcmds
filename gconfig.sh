@@ -10,9 +10,9 @@ cat << EOF
 Gitub config: Set up a new computer for development
 
 Options:
-1) Run all
+1) Run all (recommended)
 2) Configure username and email 
-3) Upload SSH key 
+3) Upload SSH key (requires option 2)
 4) Add shortcuts
 
 EOF
@@ -27,6 +27,8 @@ elif [ $ans == "3" ]; then
     go=3
 elif [ $ans == "4" ]; then
     go=4
+else 
+    die "Not a valid option"
 fi
 
 if [go == "all"] || [go == "2"]; then
@@ -48,11 +50,21 @@ if [go == "all"] || [go == "2"]; then
     git config $g user.email "$email"
 fi
 
-if [go == "all"] || [go == "2"]; then
+if [go == "all"] || [go == "3"]; then
     if [ -z "$(cat ~/.ssh/id_rsa.pub)" ]; then
-        echo 'USE DEFAULTS: just click enter twice'
+        echo 'USE DEFAULTS: just press enter twice'
         ssh-keygen
     fi
+    
+    ready=0
+    while ! (($ready))
+    do
+        read -p "Do you use 2FA (y/n)? " global
+        if [ $global == "y" ] || [$global == "n"]; then
+            ready=1
+        fi
+    done
+
     desc="${desc:-$(date +%D)}"
     user="${user:-$(git config --get user.name)}"
     path="${path:-$HOME/.ssh/id_rsa.pub}"
@@ -60,10 +72,29 @@ if [go == "all"] || [go == "2"]; then
     # check if the path is available
     [[ -f $path ]] || die "$path: no such file or directory"
     key_data="$(cat "$path")"
-    result="$(
-            curl -u "${user:=$USER}" \
-                --data "{\"title\":\"$title\",\"key\":\"$key_data\"}" \
-                https://api.github.com/user/keys
-            )"
-    echo $result
+
+    if [$global == "y"]; then
+        if [ -z "$(command -v python3)" ]; then    
+            sudo apt install python3
+        fi
+        
+        if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
+            echo "$key_data"
+            echo "$key_data" | clip.exe
+        else
+            if [ -z "$(command -v xclip)" ]; then    
+                sudo apt install xclip
+            fi
+            echo "$key_data"
+            echo "$key_data" | xclip
+        fi
+        python3 -mwebbrowser https://github.com/settings/ssh/new
+    else
+        result="$(
+                curl -u "${user:=$USER}" \
+                    --data "{\"title\":\"$title\",\"key\":\"$key_data\"}" \
+                    https://api.github.com/user/keys
+                )"
+        echo $result
+    fi
 fi
