@@ -12,7 +12,9 @@ if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"*
         sudo apt install git
     fi
     if [ -z "$(command -v hub)" ]; then    
-        echo "hub doesn't exist. Download at https://github.com/github/hub/releases"
+        if [-z "$(sudo apt install hub)"]; then
+            echo "hub doesn't exist. Download at https://github.com/github/hub/"
+        fi
     fi
     commands=(gd gi gp gr gc)
 
