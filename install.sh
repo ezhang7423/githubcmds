@@ -14,7 +14,11 @@ if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"*
     if [ -z "$(command -v hub)" ]; then    
         echo "hub doesn't exist. Download at https://github.com/github/hub/releases"
     fi
+    commands=(gd gi gp gr gc)
 
+    for i in "${commands[@]}"; 
+        do sudo cp "$i" /usr/bin;
+    done
 fi
 
-git config --global alias.c '!git add -A && git commit -m'
+echo "All done! You can delete this folder now"
