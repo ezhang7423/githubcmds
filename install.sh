@@ -14,5 +14,9 @@ if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"*
     if [ -z "$(command -v hub)" ]; then    
         echo "hub doesn't exist. Download at https://github.com/github/hub/releases"
     fi
-    
+
 fi
+
+
+git config --global alias.c '!git add -A && git commit -m'
+git config --global alias.p '!git add -A && git commit -m  \"$@\" && git push'
