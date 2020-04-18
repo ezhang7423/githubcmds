@@ -19,4 +19,4 @@ fi
 
 
 git config --global alias.c '!git add -A && git commit -m'
-git config --global alias.p '!git add -A && git commit -m  \"$@\" && git push'
+git config --global alias.p '!git add -A && git commit -m  \"$@\" && git push;'
