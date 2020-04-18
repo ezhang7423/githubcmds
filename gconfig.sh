@@ -53,13 +53,13 @@ if [ "$go" == "all" ] || [ "$go" == "2" ]; then
     read -p "Email: "  email
     git config $g user.email "$email"
     
-    echo "Successfully configured username and email.\n"
+    echo "Successfully configured username and email."
     
 fi
 
 if [ "$go" == "all" ] || [ "$go" == "3" ]; then
 
-    echo "Starting key installation.\n"
+    echo "Starting key installation."
     
     if [ -z "$(cat ~/.ssh/id_rsa.pub)" ]; then
         echo 'USE DEFAULTS: just press enter twice'
@@ -108,12 +108,12 @@ if [ "$go" == "all" ] || [ "$go" == "3" ]; then
         echo $result
     fi
 
-    echo "Successfully installed keys.\n"
+    echo "Successfully installed keys."
 fi
 
 if [ "$go" == "all" ] || [ "$go" == "4" ]; then    
 
-    echo "Starting shortcut installation.\n"
+    echo "Starting shortcut installation."
     current="$(ls)"
     if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"* ]]; then
         if [ -z "$(command -v go)" ]; then    
@@ -131,7 +131,8 @@ if [ "$go" == "all" ] || [ "$go" == "4" ]; then
         for i in "${commands[@]}"; 
             do sudo cp "$i" /usr/bin;
         done
+        
+        echo "Successfully installed shortcuts."
     fi
     
-    echo "Successfully installed shortcuts.\n"
 fi
