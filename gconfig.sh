@@ -28,10 +28,11 @@ elif [ $ans == "3" ]; then
 elif [ $ans == "4" ]; then
     go=4
 else 
-    die "Not a valid option"
+    echo "Not a valid option"
+    exit
 fi
 
-if [go == "all"] || [go == "2"]; then
+if [ "$go" == "all" ] || [ "$go" == "2" ]; then    
     while ! (($ready))
     do
         read -p "Do you share this computer (y/n)? " global
@@ -50,7 +51,7 @@ if [go == "all"] || [go == "2"]; then
     git config $g user.email "$email"
 fi
 
-if [go == "all"] || [go == "3"]; then
+if [ "$go" == "all" ] || [ "$go" == "3" ]; then
     if [ -z "$(cat ~/.ssh/id_rsa.pub)" ]; then
         echo 'USE DEFAULTS: just press enter twice'
         ssh-keygen
@@ -60,7 +61,7 @@ if [go == "all"] || [go == "3"]; then
     while ! (($ready))
     do
         read -p "Do you use 2FA (y/n)? " global
-        if [ $global == "y" ] || [$global == "n"]; then
+        if [ "$global" == "y" ] || [ "$global" == "n" ]; then
             ready=1
         fi
     done
@@ -73,7 +74,7 @@ if [go == "all"] || [go == "3"]; then
     [[ -f $path ]] || die "$path: no such file or directory"
     key_data="$(cat "$path")"
 
-    if [$global == "y"]; then
+    if [ $global == "y" ]; then
         if [ -z "$(command -v python3)" ]; then    
             sudo apt install python3
         fi
