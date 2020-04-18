@@ -33,6 +33,9 @@ else
 fi
 
 if [ "$go" == "all" ] || [ "$go" == "2" ]; then    
+
+    echo "Configuring username and email"
+
     while ! (($ready))
     do
         read -p "Do you share this computer (y/n)? " global
@@ -49,9 +52,15 @@ if [ "$go" == "all" ] || [ "$go" == "2" ]; then
     git config $g user.name "$username"
     read -p "Email: "  email
     git config $g user.email "$email"
+    
+    echo "Successfully configured username and email.\n"
+    
 fi
 
 if [ "$go" == "all" ] || [ "$go" == "3" ]; then
+
+    echo "Starting key installation.\n"
+    
     if [ -z "$(cat ~/.ssh/id_rsa.pub)" ]; then
         echo 'USE DEFAULTS: just press enter twice'
         ssh-keygen
@@ -98,4 +107,31 @@ if [ "$go" == "all" ] || [ "$go" == "3" ]; then
                 )"
         echo $result
     fi
+
+    echo "Successfully installed keys.\n"
+fi
+
+if [ "$go" == "all" ] || [ "$go" == "4" ]; then    
+
+    echo "Starting shortcut installation.\n"
+    current="$(ls)"
+    if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"* ]]; then
+        if [ -z "$(command -v go)" ]; then    
+            sudo add-apt-repository ppa:longsleep/golang-backports
+            sudo apt update
+            sudo apt install golang-go
+        fi
+        if [ -z "$(command -v hub)" ]; then    
+            if [-z "$(sudo apt install hub)"]; then
+                echo "hub isn't installed. Download at https://github.com/github/hub/"
+            fi
+        fi
+        commands=(gd gi gp gr gc)
+
+        for i in "${commands[@]}"; 
+            do sudo cp "$i" /usr/bin;
+        done
+    fi
+    
+    echo "Successfully installed shortcuts.\n"
 fi
