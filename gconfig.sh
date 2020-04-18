@@ -24,6 +24,7 @@ git config $g user.email "$email"
 if [ -z "$(cat ~/.ssh/id_rsa.pub)" ]; then
     echo 'USE DEFAULTS: just click enter twice'
     ssh-keygen
+    
 fi
 
 
