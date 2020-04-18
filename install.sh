@@ -17,6 +17,4 @@ if [[ $current == *"gd"* ]] && [[ $current == *"gi"* ]] && [[ $current == *"gr"*
 
 fi
 
-
 git config --global alias.c '!git add -A && git commit -m'
-git config --global alias.p '!git add -A && git commit -m  \"$@\" && git push;'
