@@ -1,0 +1,1 @@
+- Set up script to install dependencies and auto install scripts
