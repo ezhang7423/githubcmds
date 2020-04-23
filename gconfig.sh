@@ -1,3 +1,6 @@
+#!/bin/bash
+
+set -e
 ready=0;
 
 
@@ -122,9 +125,8 @@ if [ "$go" == "all" ] || [ "$go" == "4" ]; then
             sudo apt install golang-go
         fi
         if [ -z "$(command -v hub)" ]; then    
-            if [ -z "$(sudo apt install hub)"]; then
-                echo "hub isn't installed. Download at https://github.com/github/hub/"
-            fi
+            echo "hub isn't installed. Try installing with sudo apt install hub or download at https://github.com/github/hub/"
+            exit
         fi
         commands=(gd gi gp gr gc)
 
