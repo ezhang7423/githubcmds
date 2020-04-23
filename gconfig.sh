@@ -122,7 +122,7 @@ if [ "$go" == "all" ] || [ "$go" == "4" ]; then
             sudo apt install golang-go
         fi
         if [ -z "$(command -v hub)" ]; then    
-            if [-z "$(sudo apt install hub)"]; then
+            if [ -z "$(sudo apt install hub)"]; then
                 echo "hub isn't installed. Download at https://github.com/github/hub/"
             fi
         fi
