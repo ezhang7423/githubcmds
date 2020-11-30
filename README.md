@@ -2,9 +2,8 @@
 
 scripts:
 
-- install.sh: installs commands
 - uninstall.sh: uninstalls commands
-- gconfig.sh: installs git(if needed), sets up username, password, and ssh key on new computer
+- config.sh: installs git(if needed), sets up username, password, and ssh key on new computer
 
 commands:
 
